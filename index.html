@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Manutenção Preventiva</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                ManuPrevent
+            </a>
+            <span class="navbar-text text-light opacity-75">MVP Sprint 1</span>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            <!-- Coluna do Formulário -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold mb-4 text-primary">Novo Cadastro</h5>
+                        <form id="cadastroForm">
+                            <div class="mb-3">
+                                <label for="nomeCliente" class="form-label fw-medium">Nome do Cliente</label>
+                                <input type="text" class="form-control" id="nomeCliente" required
+                                    placeholder="Ex: Empresa Silva">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tipoEquipamento" class="form-label fw-medium">Tipo de Equipamento</label>
+                                <select class="form-select" id="tipoEquipamento" required>
+                                    <option value="" selected disabled>Selecione...</option>
+                                    <option value="Ar Condicionado">Ar Condicionado</option>
+                                    <option value="Gerador">Gerador</option>
+                                    <option value="Compressor">Compressor</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dataInstalacao" class="form-label fw-medium">Data de Instalação</label>
+                                <input type="date" class="form-control" id="dataInstalacao" required>
+                            </div>
+                            <button type="submit"
+                                class="btn btn-primary w-100 py-2 fw-medium mt-3 shadow-sm btn-cadastro">
+                                Salvar Cadastro
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna da Listagem -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="card-title fw-bold mb-0 text-dark">Equipamentos Cadastrados</h5>
+                            <span class="badge bg-primary rounded-pill py-2 px-3" id="totalCadastros">0</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Cliente</th>
+                                        <th scope="col">Equipamento</th>
+                                        <th scope="col">Data Instalação</th>
+                                        <th scope="col" class="text-end">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelaClientes">
+                                    <!-- Os dados serão inseridos aqui via JS -->
+                                </tbody>
+                            </table>
+
+                            <!-- Estado Vazio -->
+                            <div id="estadoVazio" class="text-center text-muted py-5">
+                                <p class="mb-0 fs-5">Nenhum equipamento cadastrado ainda.</p>
+                                <small class="opacity-75">Use o formulário ao lado para adicionar o primeiro.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
