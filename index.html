@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">
-                ManuPrevent
+                CheckSeg
             </a>
             <span class="navbar-text text-light opacity-75">MVP Sprint 1</span>
         </div>
@@ -61,11 +61,46 @@
 
             <!-- Coluna da Listagem -->
             <div class="col-lg-8">
-                <div class="card shadow-sm border-0 rounded-4 h-100">
+                <!-- Dashboard de Resumo -->
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card text-center btn-dashboard shadow-sm border-0 active" data-filter="todos" id="cardTodos">
+                            <div class="card-body p-3">
+                                <h6 class="text-muted mb-1 fw-medium">Total</h6>
+                                <h3 class="fw-bold mb-0 text-dark" id="countTodos">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="em-dia" id="cardEmDia">
+                            <div class="card-body p-3">
+                                <h6 class="text-success mb-1 fw-medium">Em dia</h6>
+                                <h3 class="fw-bold mb-0 text-success" id="countEmDia">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="proximo" id="cardProximo">
+                            <div class="card-body p-3">
+                                <h6 class="text-warning mb-1 fw-medium text-dark-warning">Próximos</h6>
+                                <h3 class="fw-bold mb-0 text-warning text-dark-warning" id="countProximo">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="vencido" id="cardVencido">
+                            <div class="card-body p-3">
+                                <h6 class="text-danger mb-1 fw-medium">Vencidos</h6>
+                                <h3 class="fw-bold mb-0 text-danger" id="countVencido">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 rounded-4">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="card-title fw-bold mb-0 text-dark">Equipamentos Cadastrados</h5>
-                            <span class="badge bg-primary rounded-pill py-2 px-3" id="totalCadastros">0</span>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover align-middle">
@@ -73,7 +108,9 @@
                                     <tr>
                                         <th scope="col">Cliente</th>
                                         <th scope="col">Equipamento</th>
-                                        <th scope="col">Data Instalação</th>
+                                        <th scope="col">Instalação</th>
+                                        <th scope="col">Vencimento</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col" class="text-end">Ações</th>
                                     </tr>
                                 </thead>
@@ -84,8 +121,8 @@
 
                             <!-- Estado Vazio -->
                             <div id="estadoVazio" class="text-center text-muted py-5">
-                                <p class="mb-0 fs-5">Nenhum equipamento cadastrado ainda.</p>
-                                <small class="opacity-75">Use o formulário ao lado para adicionar o primeiro.</small>
+                                <p class="mb-0 fs-5">Nenhum equipamento encontrado.</p>
+                                <small class="opacity-75">Tente alterar os filtros ou adicione um novo cadastro.</small>
                             </div>
                         </div>
                     </div>

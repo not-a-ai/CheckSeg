@@ -56,3 +56,61 @@ body {
         transform: translateY(0);
     }
 }
+
+/* Dashboard Cards */
+.btn-dashboard {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent !important;
+}
+
+.btn-dashboard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+}
+
+.btn-dashboard.active {
+    border-color: #2563eb !important;
+    background-color: #f0fdf4; /* default, will be overridden by JS if needed, or just light blue */
+}
+
+#cardTodos.active { border-color: #6c757d !important; background-color: #f8f9fa; }
+#cardEmDia.active { border-color: #198754 !important; background-color: #f0fdf4; }
+#cardProximo.active { border-color: #ffc107 !important; background-color: #fffbeb; }
+#cardVencido.active { border-color: #dc3545 !important; background-color: #fef2f2; }
+
+/* Custom Status Colors */
+.text-dark-warning {
+    color: #b45309 !important;
+}
+
+.status-badge {
+    padding: 0.35em 0.65em;
+    border-radius: 50rem;
+    font-size: 0.85em;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-badge.em-dia {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.proximo {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge.vencido {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Identificador visual na linha da tabela */
+.tr-status {
+    border-left: 4px solid transparent;
+}
+.tr-status.em-dia { border-left-color: #22c55e; }
+.tr-status.proximo { border-left-color: #f59e0b; }
+.tr-status.vencido { border-left-color: #ef4444; }
