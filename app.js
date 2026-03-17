@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countProximo = document.getElementById('countProximo');
     const countVencido = document.getElementById('countVencido');
     const btnDashboards = document.querySelectorAll('.btn-dashboard');
+    const inputDataInstalacao = document.getElementById('dataInstalacao');
 
     let filtroAtual = 'todos';
 
@@ -20,6 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
         'Gerador': 12
     };
 
+    // Configurando limites de data (10 anos para trás e 10 anos para frente)
+    const hojeGlobal = new Date();
+    const minDate = new Date(hojeGlobal);
+    minDate.setFullYear(hojeGlobal.getFullYear() - 10);
+    const maxDate = new Date(hojeGlobal);
+    maxDate.setFullYear(hojeGlobal.getFullYear() + 10);
+
+    const formatForInput = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    };
+
+    if (inputDataInstalacao) {
+        inputDataInstalacao.min = formatForInput(minDate);
+        inputDataInstalacao.max = formatForInput(maxDate);
+    }
+
     // Inicializa a listagem ao carregar a página
     renderTabela();
 
@@ -28,13 +48,34 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         const nomeCliente = document.getElementById('nomeCliente').value.trim();
+        const telefoneCliente = document.getElementById('telefoneCliente').value.trim();
         const tipoEquipamento = document.getElementById('tipoEquipamento').value;
         const dataInstalacao = document.getElementById('dataInstalacao').value;
 
-        if (nomeCliente && tipoEquipamento && dataInstalacao) {
+        if (nomeCliente && telefoneCliente && tipoEquipamento && dataInstalacao) {
+            // Validar limites da data
+            const [anoStr, mesStr, diaStr] = dataInstalacao.split('-');
+            const dataSelecionada = new Date(parseInt(anoStr), parseInt(mesStr) - 1, parseInt(diaStr));
+            
+            // Zerar hora para comparação justa
+            const hojeTemp = new Date();
+            hojeTemp.setHours(0, 0, 0, 0);
+            
+            const limitePassado = new Date(hojeTemp);
+            limitePassado.setFullYear(hojeTemp.getFullYear() - 10);
+            
+            const limiteFuturo = new Date(hojeTemp);
+            limiteFuturo.setFullYear(hojeTemp.getFullYear() + 10);
+            
+            if (dataSelecionada < limitePassado || dataSelecionada > limiteFuturo) {
+                alert('A data de instalação deve estar entre 10 anos no passado e 10 anos no futuro.');
+                return;
+            }
+
             const novoCadastro = {
                 id: Date.now().toString(),
                 cliente: nomeCliente,
+                telefone: telefoneCliente,
                 equipamento: tipoEquipamento,
                 dataInstalacao: dataInstalacao,
                 dataCadastro: new Date().toISOString()
@@ -156,8 +197,19 @@ document.addEventListener('DOMContentLoaded', () => {
             cadastrosFiltrados.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.className = `tr-enter tr-status ${item.status.classe}`;
+                
+                // Formatar número para o link do WhatsApp (remover não-números)
+                const numeroLimpo = item.telefone ? item.telefone.replace(/\D/g, '') : '';
+                const linkWhatsApp = numeroLimpo ? `https://wa.me/55${numeroLimpo}` : '#';
+                const contatoHtml = item.telefone 
+                    ? `<a href="${linkWhatsApp}" target="_blank" class="text-decoration-none border rounded p-1 bg-light text-success fw-medium d-inline-block" style="font-size: 0.85rem;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16" style="margin-right:4px;">
+  <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+</svg>${item.telefone}</a>`
+                    : '<span class="text-muted small">N/A</span>';
+
                 tr.innerHTML = `
                     <td class="fw-medium">${item.cliente}</td>
+                    <td>${contatoHtml}</td>
                     <td><span class="badge bg-light text-dark border">${item.equipamento}</span></td>
                     <td>${formatarDataISO(item.dataInstalacao)}</td>
                     <td class="fw-medium">${item.dataVencimentoFormatada}</td>

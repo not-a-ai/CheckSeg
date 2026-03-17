@@ -20,7 +20,7 @@
             <a class="navbar-brand fw-bold" href="#">
                 CheckSeg
             </a>
-            <span class="navbar-text text-light opacity-75">MVP Sprint 1</span>
+            <span class="navbar-text text-light opacity-75">MVP Sprint 2</span>
         </div>
     </nav>
 
@@ -50,6 +50,11 @@
                                 <label for="dataInstalacao" class="form-label fw-medium">Data de Instalação</label>
                                 <input type="date" class="form-control" id="dataInstalacao" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="telefoneCliente" class="form-label fw-medium">Telefone (WhatsApp)</label>
+                                <input type="tel" class="form-control" id="telefoneCliente" required
+                                    placeholder="Ex: 11987654321">
+                            </div>
                             <button type="submit"
                                 class="btn btn-primary w-100 py-2 fw-medium mt-3 shadow-sm btn-cadastro">
                                 Salvar Cadastro
@@ -64,7 +69,8 @@
                 <!-- Dashboard de Resumo -->
                 <div class="row g-3 mb-4">
                     <div class="col-sm-6 col-md-3">
-                        <div class="card text-center btn-dashboard shadow-sm border-0 active" data-filter="todos" id="cardTodos">
+                        <div class="card text-center btn-dashboard shadow-sm border-0 active" data-filter="todos"
+                            id="cardTodos">
                             <div class="card-body p-3">
                                 <h6 class="text-muted mb-1 fw-medium">Total</h6>
                                 <h3 class="fw-bold mb-0 text-dark" id="countTodos">0</h3>
@@ -72,7 +78,8 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="em-dia" id="cardEmDia">
+                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="em-dia"
+                            id="cardEmDia">
                             <div class="card-body p-3">
                                 <h6 class="text-success mb-1 fw-medium">Em dia</h6>
                                 <h3 class="fw-bold mb-0 text-success" id="countEmDia">0</h3>
@@ -80,7 +87,8 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="proximo" id="cardProximo">
+                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="proximo"
+                            id="cardProximo">
                             <div class="card-body p-3">
                                 <h6 class="text-warning mb-1 fw-medium text-dark-warning">Próximos</h6>
                                 <h3 class="fw-bold mb-0 text-warning text-dark-warning" id="countProximo">0</h3>
@@ -88,7 +96,8 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="vencido" id="cardVencido">
+                        <div class="card text-center btn-dashboard shadow-sm border-0" data-filter="vencido"
+                            id="cardVencido">
                             <div class="card-body p-3">
                                 <h6 class="text-danger mb-1 fw-medium">Vencidos</h6>
                                 <h3 class="fw-bold mb-0 text-danger" id="countVencido">0</h3>
@@ -107,6 +116,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">Cliente</th>
+                                        <th scope="col">Contato</th>
                                         <th scope="col">Equipamento</th>
                                         <th scope="col">Instalação</th>
                                         <th scope="col">Vencimento</th>
