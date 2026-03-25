@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabelaClientes = document.getElementById('tabelaClientes');
     const estadoVazio = document.getElementById('estadoVazio');
     const tabelaContainer = document.querySelector('.table').parentElement;
-    
+
     // Dashboard elements
     const countTodos = document.getElementById('countTodos');
     const countEmDia = document.getElementById('countEmDia');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const clienteId = clienteSelect.value;
         const clientes = JSON.parse(localStorage.getItem('cadastrosClientes')) || [];
         const cliente = clientes.find(c => c.id === clienteId);
-        
+
         const nomeCliente = cliente ? cliente.nome : '';
         const telefoneCliente = document.getElementById('telefoneCliente').value.trim();
         const tipoEquipamento = document.getElementById('tipoEquipamento').value;
@@ -65,17 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Validar limites da data
             const [anoStr, mesStr, diaStr] = dataInstalacao.split('-');
             const dataSelecionada = new Date(parseInt(anoStr), parseInt(mesStr) - 1, parseInt(diaStr));
-            
+
             // Zerar hora para comparação justa
             const hojeTemp = new Date();
             hojeTemp.setHours(0, 0, 0, 0);
-            
+
             const limitePassado = new Date(hojeTemp);
             limitePassado.setFullYear(hojeTemp.getFullYear() - 10);
-            
+
             const limiteFuturo = new Date(hojeTemp);
             limiteFuturo.setFullYear(hojeTemp.getFullYear() + 10);
-            
+
             if (dataSelecionada < limitePassado || dataSelecionada > limiteFuturo) {
                 alert('A data de instalação deve estar entre 10 anos no passado e 10 anos no futuro.');
                 return;
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnDashboards.forEach(b => b.classList.remove('active'));
             // Add active no clicado
             btn.classList.add('active');
-            
+
             filtroAtual = btn.dataset.filter;
             renderTabela();
         });
@@ -120,23 +120,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTabelaClientes() {
         let clientes = JSON.parse(localStorage.getItem('cadastrosClientes')) || [];
         const selectedId = clienteSelect.value;
-        
+
         clienteSelect.innerHTML = '<option value="" selected disabled>Selecione um cliente...</option>';
         listaClientesModal.innerHTML = '';
-        
+
         if (clientes.length === 0) {
             estadoVazioClientes.style.display = 'block';
             listaClientesModal.parentElement.style.display = 'none';
         } else {
             estadoVazioClientes.style.display = 'none';
             listaClientesModal.parentElement.style.display = 'table';
-            
+
             clientes.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c.id;
                 opt.textContent = c.nome;
                 clienteSelect.appendChild(opt);
-                
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="fw-medium">${c.nome}</td>
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 listaClientesModal.appendChild(tr);
             });
         }
-        
+
         if (selectedId && clientes.find(c => c.id === selectedId)) {
             clienteSelect.value = selectedId;
         }
@@ -186,31 +186,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.excluirCliente = function(id) {
-        if(confirm('Deseja excluir este cliente? Isso NÃO removerá os equipamentos já associados a ele.')) {
+    window.excluirCliente = function (id) {
+        if (confirm('Deseja excluir este cliente? Isso NÃO removerá os equipamentos já associados a ele.')) {
             let clientes = JSON.parse(localStorage.getItem('cadastrosClientes')) || [];
             clientes = clientes.filter(c => c.id !== id);
             localStorage.setItem('cadastrosClientes', JSON.stringify(clientes));
             renderTabelaClientes();
-            
+
             if (clienteSelect.value === id) {
                 clienteSelect.value = "";
                 document.getElementById('telefoneCliente').value = "";
             }
         }
     };
-    // --- FIM LÓGICA DE CLIENTES ---
 
     function calcularVencimento(dataInstalacaoStr, tipoEquipamento) {
         const dataStr = dataInstalacaoStr;
         // Se a string for yyyy-mm-dd, ajustamos para pegar meia-noite local para evitar bugs de fuso horário
         const [ano, mes, dia] = dataStr.split('-');
         const dataInstalacao = new Date(ano, mes - 1, dia);
-        
+
         const mesesAdicionais = MESES_MANUTENCAO[tipoEquipamento] || 6;
         const dataVencimento = new Date(dataInstalacao);
         dataVencimento.setMonth(dataVencimento.getMonth() + mesesAdicionais);
-        
+
         return dataVencimento;
     }
 
@@ -249,15 +248,15 @@ document.addEventListener('DOMContentLoaded', () => {
             'Gerador': `Olá, ${cliente}! Tudo bem? A manutenção preventiva do seu Gerador está programada para este período. Manter a manutenção em dia é essencial para evitar imprevistos e garantir energia quando precisar. Podemos agendar?`,
             'Compressor': `Olá, ${cliente}! Tudo bem? Notamos que o seu Compressor precisa passar por manutenção preventiva. Vamos agendar o serviço para evitar paradas na produção e surpresas?`
         };
-        
+
         const mensagemPadrao = `Olá, ${cliente}! Tudo bem? Gostaria de lembrar da manutenção preventiva do seu equipamento (${equipamento}). Vamos agendar?`;
-        
+
         return mensagens[equipamento] || mensagemPadrao;
     }
 
     function renderTabela() {
         const cadastros = JSON.parse(localStorage.getItem('cadastrosManutencao')) || [];
-        
+
         // Objeto para guardar as contagens do dashboard
         let stats = {
             todos: cadastros.length,
@@ -270,9 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const cadastrosProcessados = cadastros.map(item => {
             const dataVencimento = calcularVencimento(item.dataInstalacao, item.equipamento);
             const status = verificarStatus(dataVencimento);
-            
+
             stats[status.id]++;
-            
+
             return {
                 ...item,
                 dataVencimentoFormatada: formatarDataBR(dataVencimento),
@@ -281,14 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Atualiza Dashboard na tela
-        if(countTodos) countTodos.textContent = stats.todos;
-        if(countEmDia) countEmDia.textContent = stats['em-dia'];
-        if(countProximo) countProximo.textContent = stats.proximo;
-        if(countVencido) countVencido.textContent = stats.vencido;
+        if (countTodos) countTodos.textContent = stats.todos;
+        if (countEmDia) countEmDia.textContent = stats['em-dia'];
+        if (countProximo) countProximo.textContent = stats.proximo;
+        if (countVencido) countVencido.textContent = stats.vencido;
 
         // Filtra para a tabela atual baseada no card clicado
-        const cadastrosFiltrados = filtroAtual === 'todos' 
-            ? cadastrosProcessados 
+        const cadastrosFiltrados = filtroAtual === 'todos'
+            ? cadastrosProcessados
             : cadastrosProcessados.filter(c => c.status.id === filtroAtual);
 
         tabelaClientes.innerHTML = '';
@@ -303,12 +302,12 @@ document.addEventListener('DOMContentLoaded', () => {
             cadastrosFiltrados.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.className = `tr-enter tr-status ${item.status.classe}`;
-                
+
                 // Formatar número para o link do WhatsApp (remover não-números)
                 const numeroLimpo = item.telefone ? item.telefone.replace(/\D/g, '') : '';
                 const mensagem = gerarMensagemWhatsApp(item.cliente, item.equipamento);
                 const linkWhatsApp = numeroLimpo ? `https://wa.me/55${numeroLimpo}?text=${encodeURIComponent(mensagem)}` : '#';
-                const contatoHtml = item.telefone 
+                const contatoHtml = item.telefone
                     ? `<a href="${linkWhatsApp}" target="_blank" class="text-decoration-none border rounded p-1 bg-light text-success fw-medium d-inline-block" style="font-size: 0.85rem;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16" style="margin-right:4px;">
   <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
 </svg>${item.telefone}</a>`
@@ -333,8 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Função global para excluir cadastro
-    window.excluirCadastro = function(id) {
-        if(confirm('Deseja realmente excluir este cadastro?')) {
+    window.excluirCadastro = function (id) {
+        if (confirm('Deseja realmente excluir este cadastro?')) {
             let cadastros = JSON.parse(localStorage.getItem('cadastrosManutencao')) || [];
             cadastros = cadastros.filter(c => c.id !== id);
             localStorage.setItem('cadastrosManutencao', JSON.stringify(cadastros));

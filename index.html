@@ -20,7 +20,6 @@
             <a class="navbar-brand fw-bold" href="#">
                 CheckSeg
             </a>
-            <span class="navbar-text text-light opacity-75">MVP Sprint 2</span>
         </div>
     </nav>
 
@@ -33,9 +32,11 @@
                         <h5 class="card-title fw-bold mb-4 text-primary">Novo Cadastro</h5>
                         <form id="cadastroForm">
                             <div class="mb-3">
-                                <label for="clienteSelect" class="form-label fw-medium d-flex justify-content-between align-items-center">
+                                <label for="clienteSelect"
+                                    class="form-label fw-medium d-flex justify-content-between align-items-center">
                                     <span>Cliente</span>
-                                    <button type="button" class="btn btn-sm btn-link text-decoration-none p-0" data-bs-toggle="modal" data-bs-target="#modalGerenciarClientes">
+                                    <button type="button" class="btn btn-sm btn-link text-decoration-none p-0"
+                                        data-bs-toggle="modal" data-bs-target="#modalGerenciarClientes">
                                         + Gerenciar Clientes
                                     </button>
                                 </label>
@@ -149,7 +150,8 @@
     </div>
 
     <!-- Modal Gerenciar Clientes -->
-    <div class="modal fade" id="modalGerenciarClientes" tabindex="-1" aria-labelledby="modalGerenciarClientesLabel" aria-hidden="true">
+    <div class="modal fade" id="modalGerenciarClientes" tabindex="-1" aria-labelledby="modalGerenciarClientesLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-light">
@@ -163,11 +165,14 @@
                             <form id="formNovoCliente" class="row g-3">
                                 <div class="col-md-6">
                                     <label for="novoNomeCliente" class="form-label fw-medium">Nome do Cliente</label>
-                                    <input type="text" class="form-control" id="novoNomeCliente" required placeholder="Ex: Empresa Silva">
+                                    <input type="text" class="form-control" id="novoNomeCliente" required
+                                        placeholder="Ex: Empresa Silva">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="novoTelefoneCliente" class="form-label fw-medium">Telefone (WhatsApp)</label>
-                                    <input type="tel" class="form-control" id="novoTelefoneCliente" required placeholder="Ex: 11987654321">
+                                    <label for="novoTelefoneCliente" class="form-label fw-medium">Telefone
+                                        (WhatsApp)</label>
+                                    <input type="tel" class="form-control" id="novoTelefoneCliente" required
+                                        placeholder="Ex: 11987654321">
                                 </div>
                                 <div class="col-md-2 d-flex align-items-end">
                                     <button type="submit" class="btn btn-primary w-100 fw-medium">Salvar</button>
