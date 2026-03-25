@@ -33,9 +33,15 @@
                         <h5 class="card-title fw-bold mb-4 text-primary">Novo Cadastro</h5>
                         <form id="cadastroForm">
                             <div class="mb-3">
-                                <label for="nomeCliente" class="form-label fw-medium">Nome do Cliente</label>
-                                <input type="text" class="form-control" id="nomeCliente" required
-                                    placeholder="Ex: Empresa Silva">
+                                <label for="clienteSelect" class="form-label fw-medium d-flex justify-content-between align-items-center">
+                                    <span>Cliente</span>
+                                    <button type="button" class="btn btn-sm btn-link text-decoration-none p-0" data-bs-toggle="modal" data-bs-target="#modalGerenciarClientes">
+                                        + Gerenciar Clientes
+                                    </button>
+                                </label>
+                                <select class="form-select" id="clienteSelect" required>
+                                    <option value="" selected disabled>Selecione um cliente...</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="tipoEquipamento" class="form-label fw-medium">Tipo de Equipamento</label>
@@ -53,7 +59,8 @@
                             <div class="mb-3">
                                 <label for="telefoneCliente" class="form-label fw-medium">Telefone (WhatsApp)</label>
                                 <input type="tel" class="form-control" id="telefoneCliente" required
-                                    placeholder="Ex: 11987654321">
+                                    placeholder="Ex: 11987654321" readonly>
+                                <div class="form-text small text-muted">Preenchido automaticamente.</div>
                             </div>
                             <button type="submit"
                                 class="btn btn-primary w-100 py-2 fw-medium mt-3 shadow-sm btn-cadastro">
@@ -134,6 +141,57 @@
                                 <p class="mb-0 fs-5">Nenhum equipamento encontrado.</p>
                                 <small class="opacity-75">Tente alterar os filtros ou adicione um novo cadastro.</small>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Gerenciar Clientes -->
+    <div class="modal fade" id="modalGerenciarClientes" tabindex="-1" aria-labelledby="modalGerenciarClientesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="modalGerenciarClientesLabel">Gerenciar Clientes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card shadow-sm border-0 mb-4 bg-light">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold mb-3 text-primary">Adicionar Novo Cliente</h6>
+                            <form id="formNovoCliente" class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="novoNomeCliente" class="form-label fw-medium">Nome do Cliente</label>
+                                    <input type="text" class="form-control" id="novoNomeCliente" required placeholder="Ex: Empresa Silva">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="novoTelefoneCliente" class="form-label fw-medium">Telefone (WhatsApp)</label>
+                                    <input type="tel" class="form-control" id="novoTelefoneCliente" required placeholder="Ex: 11987654321">
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary w-100 fw-medium">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-3">Clientes Cadastrados</h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Contato</th>
+                                    <th class="text-end">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaClientesModal">
+                                <!-- Clientes via JS -->
+                            </tbody>
+                        </table>
+                        <div id="estadoVazioClientes" class="text-center text-muted py-3" style="display: none;">
+                            <p class="mb-0">Nenhum cliente cadastrado.</p>
                         </div>
                     </div>
                 </div>

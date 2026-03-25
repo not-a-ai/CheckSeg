@@ -14,6 +14,8 @@ Este projeto tem como objetivo inicial permitir o rápido cadastro de equipament
     *   🟢 **Em Dia**: Manutenção com mais de 30 dias para vencer.
     *   🟡 **Próximos**: Faltam 30 dias ou menos para o vencimento.
     *   🔴 **Vencidos**: A data ideal de manutenção já passou.
+*   **Gestão de Clientes Independente**: Cadastro de clientes isolado para acelerar o lançamento de múltiplos equipamentos, com função de autocompletar no formulário principal.
+*   **Integração com WhatsApp**: Botões de contato direto geram links do WhatsApp contendo mensagens padronizadas já escritas e customizadas dependendo do equipamento (Ar Condicionado, Gerador, Compressor), facilitando o contato para agendamento.
 *   **Filtros Interativos Rápidos**: Ao clicar em um dos cartões do Dashboard, a tabela é filtrada instantaneamente sem recarregar a página.
 *   **Persistência em Tempo Real (Offline)**: Todos os cadastros são salvos no `localStorage` do navegador.
 
@@ -53,4 +55,5 @@ Como este é um projeto Frontend puro rodando com `localStorage`, não há neces
 *   [ ] Relatórios de custos e exportação em Excel.
 *   [ ] Sistema de Autenticação (Login para múltiplos usuários técnicos).
 *   [ ] Histórico de Ordens de Serviço (OS) atreladas a um equipamento.
-*   [ ] Disparo de alertas via e-mail ou WhatsApp quando o status muda para "Próximo".
+*   [x] Geração de links de alerta via WhatsApp (com mensagens pré-formatadas).
+*   [ ] Disparo de alertas automáticos via E-mail ou bot de WhatsApp quando o status muda.
